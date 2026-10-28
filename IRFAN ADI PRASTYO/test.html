@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar DOM</title>
+</head>
+<body>
+    <h2>FORM SEDERHANA</h2>
+
+    <form onsubmit="submitData(event)">
+        <input type="text" id="nama" placeholder="Masukkan nama" required>
+        <input type="number" id="kelas" placeholder="Masukkan kelas" required>
+
+        <button type="submit">Simpan</button>
+    </form>
+
+    <h3>DAFTAR SISWA</h3>
+
+    <ul id="daftarSiswa"></ul>
+
+    <script>
+
+        // untuk menyimpan data
+        let dataSiswa = [];
+
+        // untuk menjalankan form
+        function submitData(event) {
+            //untuk membuat halaman tidak reload saat submit data
+            event.preventDefault();
+
+            //mengambil input dari nama
+            let nama = document.getElementById("nama").value;
+
+            //mengambil input dari kelas
+            let kelas = document.getElementById("kelas").value;
+
+            //digunakan untuk mengisi data array
+            dataSiswa.push({
+                nama: nama,
+                kelas: kelas
+            });
+
+            //memanggil function tampilkan data
+            tampilkanData();
+
+            // mengosongkan form saat tombol simpan di klik
+            document.querySelector("form").reset();
+
+        }
+
+        function tampilkanData() {
+            //memanggil id daftar siswa di ul
+            let daftar = document.getElementById("daftarSiswa");
+
+            //menghapus element sebelumnya agar tidak terjadi data double
+            daftar.innerHTML="";
+
+            //untuk perulangan saat data siswa dipanggil
+            dataSiswa.forEach(function(siswa, index){
+                daftar.innerHTML += `
+                <li>
+                    ${siswa.nama} - ${siswa.kelas}
+
+                    <button onclick="hapusData(${index})">
+                        hapus
+                    </button>
+                </li>
+                `
+            });
+        }
+
+    </script>
+</body>
+</html>

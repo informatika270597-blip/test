@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Manipulasi Data</title>
+</head>
+<body>
+    <h1>Form Daftar Belanja</h1>
+
+    <form onsubmit="submitData(event)">
+        <label">Nama</label>
+        <input type="text" id="nama" placeholder="Masukkan Nama Barang" required>
+
+        <input type="number" id="harga" placeholder="Masukkan Harga Barang" required>
+
+        <!-- bisa tambahkan input merek -->
+        <button type="submit">Simpan</button>
+    </form>
+
+    <h3>Daftar Belanja</h3>
+
+    <ol id="daftarBelanja"></ol>
+
+    <script>
+        //menyimpan data belanja
+        let dataBelanja = [];
+
+        //menjalankan form
+        function submitData(event) {
+
+            //agar halaman tidak refresh saat simpan data
+            event.preventDefault();
+
+            //mengambil data inputan dari nama
+            let nama = document.getElementById("nama").value;
+
+            //mengambil data inputan dari harga
+            let harga = document.getElementById("harga").value;
+
+            //merek
+
+            //memasukkan data ke variable data belanja
+            dataBelanja.push({
+                nama: nama,
+                harga: harga
+                //merek
+            });
+
+            //memanggil function tampilkan data
+            tampilkanData();
+
+            //mengosongkan form saat di klik simpan
+            document.querySelector("form").reset();
+        }
+
+        function tampilkanData() {
+
+            //mengambil id untuk menampilkan data
+            let daftar= document.getElementById("daftarBelanja");
+
+            //menghapus tampilan sebelumnya agar data tidak double
+            daftar.innerHTML = "";
+
+            //menulang terus selama ada event tampilkan data
+            dataBelanja.forEach(function(barang, index){
+                daftar.innerHTML += `
+                    <li>
+                        
+                        ${barang.nama} - ${barang.harga} 
+
+                        <button onclick="hapusData(${index})">
+                            hapus data
+                        </button>
+                `;
+            });
+        }
+
+        //buat hapus data
+        function hapusData(index) {
+
+            //menampilkan kembali data setelah dihapus 1
+            dataBelanja.splice(index, 1);
+
+            tampilkanData();
+        }
+    </script>
+</body>
+</html>
